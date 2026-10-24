@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Petualangan Matematika – Bab 2: Penjumlahan dan Pengurangan</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#dff2ff;--card:#fff;--ink:#23395b;--sun:#ffc93c;--mint:#5ed6a8;--org:#ff8a3d;--pur:#8b6cf0;--sky:#3aa7ff;--bad:#e5484d;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10243f;--card:#1b3558;--ink:#eef6ff}}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font-family:'Fredoka','Trebuchet MS',Arial,sans-serif;font-size:19px;color:var(--ink);background:var(--bg);min-height:100vh;line-height:1.5}
+.sky{position:fixed;inset:0;z-index:-1;background:radial-gradient(circle at 15% 12%,#fff8 0 60px,#0000 62px),radial-gradient(circle at 85% 20%,#fff6 0 80px,#0000 82px),linear-gradient(var(--bg),#b9e4ff55)}
+.wrap{max-width:760px;margin:0 auto;padding:14px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.pill{background:var(--card);border-radius:99px;padding:6px 14px;font-weight:600;box-shadow:0 3px 0 #0002}
+button{font:inherit;font-weight:600;border:0;border-radius:16px;padding:12px 20px;background:var(--org);color:#fff;box-shadow:0 5px 0 #c4621b;cursor:pointer;min-height:48px}
+button:active{transform:translateY(3px);box-shadow:0 2px 0 #c4621b}
+button.alt{background:var(--sky);box-shadow:0 5px 0 #1e78c2}
+button.go{background:var(--mint);box-shadow:0 5px 0 #2e9f77;color:#07382a}
+button:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--pur);outline-offset:2px}
+.card{background:var(--card);border-radius:24px;padding:20px;margin:14px 0;box-shadow:0 6px 0 #0001}
+h1{font-size:2.3rem;line-height:1.1;margin:.2em 0;color:var(--pur)}
+h2{margin:.2em 0;color:var(--sky)}
+.hero{text-align:center}
+.hero svg{width:100%;max-width:420px;height:auto}
+input,select{font:inherit;width:100%;padding:12px;border-radius:14px;border:3px solid var(--sky);margin:6px 0 12px;background:var(--card);color:var(--ink)}
+.map{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.node{padding:14px 8px;text-align:center;border-radius:22px;background:var(--card);border:4px solid var(--sun);font-size:.9rem;display:flex;flex-direction:column;align-items:center;gap:4px;min-height:130px;box-shadow:0 5px 0 #0001}
+.node b{font-size:1.9rem}
+.node.lock{border-color:#9aa8b8;opacity:.6}
+.node.done{border-color:var(--mint)}
+.node button{padding:6px 12px;min-height:36px;font-size:.9rem}
+.bar{height:16px;background:#0002;border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--mint),var(--sun));transition:width .5s}
+.big{font-size:2.2rem;font-weight:700;text-align:center;color:var(--pur)}
+.dots{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:8px 0}
+.dot{font-size:1.6rem;transition:transform .3s}
+.dot.x{opacity:.25;transform:scale(.7)}
+.nl{display:flex;overflow-x:auto;gap:4px;padding:10px 4px}
+.nl span{flex:0 0 auto;width:40px;height:40px;border-radius:50%;background:#0001;display:grid;place-items:center;font-weight:600;transition:all .3s}
+.nl span.on{background:var(--sun);transform:translateY(-6px) scale(1.1)}
+.nl span.end{background:var(--mint)}
+pre.col{font:700 1.8rem 'Courier New',monospace;background:#fffbe0;color:#23395b;border-radius:16px;padding:12px 20px;display:inline-block;margin:8px auto;line-height:1.25}
+.center{text-align:center}
+.tens{display:inline-block;width:14px;height:44px;background:var(--sky);border-radius:4px;margin:2px}
+.ones{display:inline-block;width:14px;height:14px;background:var(--org);border-radius:50%;margin:2px}
+.opts{display:grid;gap:10px}
+.opts button{background:var(--card);color:var(--ink);box-shadow:0 5px 0 #0003;border:3px solid var(--sky);text-align:left}
+.opts button.ok{background:var(--mint);border-color:#2e9f77}
+.opts button.no{background:#ffd3d3;border-color:var(--bad)}
+.fb{padding:12px;border-radius:16px;margin-top:12px;font-weight:500}
+.fb.ok{background:#d6f7e8;color:#0d4a34}
+.fb.no{background:#ffe3e3;color:#7a1b1b}
+.pop{animation:pop .4s}
+@keyframes pop{0%{transform:scale(.8)}60%{transform:scale(1.06)}100%{transform:scale(1)}}
+.stars{font-size:2.4rem;text-align:center}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:480px){body{font-size:17px}h1{font-size:1.8rem}.map{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="sky"></div>
+<div class="wrap">
+  <div class="top"><span class="pill" id="who">Petualangan Matematika</span><button class="alt" id="snd" aria-label="Suara">🔊 Suara</button></div>
+  <div id="app"></div>
+</div>
+<script>
+// ====== PENGATURAN ======
+var SCRIPT_URL = ""; // Tempel URL Web App Google Apps Script di sini
+var KELAS = ["2A","2B","2C","2D"];
+
+// ====== DATA ======
+var flowers=function(n,x){var s="";for(var i=0;i<n;i++)s+='<span class="dot'+(i<x?' x':'')+'">🌼</span>';return '<div class="dots">'+s+'</div>'};
+var STAGES=[
+{t:"Dunia Penjumlahan",ic:"🌼",learn:[
+ "<h2>Apa itu penjumlahan?</h2><p>Penjumlahan dipakai saat dua kelompok benda <b>digabung</b>, sehingga jumlahnya jadi lebih banyak.</p><p>Ada <b>10 tangkai bunga</b> di vas. Lalu dimasukkan lagi <b>3 tangkai</b>.</p>"+flowers(10,0)+"<div class='dots'><span class='dot'>🌷🌷🌷</span></div><p>Gabungkan, lalu hitung semuanya: <b>13 tangkai</b>.</p><div class='big'>10 + 3 = 13</div><p>Tanda <b>+</b> artinya ditambah. Tanda <b>=</b> artinya sama dengan.</p>",
+ "<h2>Menghitung maju</h2><p>Penjumlahan juga bisa dengan menghitung maju. Contoh: <b>8 + 5 = ...</b></p><p>Mulai dari 8, lalu lompat maju 5 langkah. Tekan tombolnya!</p><div data-nl='8,5,1'></div><p>Jadi, <b>8 + 5 = 13</b>. Penjumlahan berarti bergerak <b>maju</b> pada garis bilangan.</p>","<h2>Kata kunci penjumlahan</h2><p>Waspadai kata-kata ini. Biasanya kita memakai <b>+</b>:</p><p>• ditambah<br>• digabung<br>• bertambah<br>• seluruhnya / semuanya</p><p>Contoh: 6 burung hinggap di pohon. Datang 4 burung lagi. Digabung jadi <b>6 + 4 = 10</b> burung.</p>","<h2>Ayo coba sendiri</h2><p>Mau tahu 3 + 4? Mulai dari 3, maju 4 langkah.</p><div data-nl='3,4,1'></div><p>Sampai di 7, jadi <b>3 + 4 = 7</b>.</p><p>Tips: mulai dari bilangan yang <b>lebih besar</b> supaya lompatannya lebih sedikit. 2 + 9 sama dengan 9 + 2 = 11.</p>"],
+ q:[["Ada 10 bunga, ditambah 3 bunga. Berapa bunga sekarang?",["12","13","14"],1,"10 + 3 = 13."],
+    ["Mulai dari 8, lompat maju 5 langkah. Sampai di bilangan ...",["12","13","14"],1,"9, 10, 11, 12, 13. Jadi 8 + 5 = 13."],
+    ["Penjumlahan pada garis bilangan berarti bergerak ...",["maju","mundur"],0,"Ditambah berarti maju."],["Ada 6 burung, datang 4 burung lagi. Jumlah burung ...",["10","2","9"],0,"6 + 4 = 10."],["Kata yang berarti penjumlahan adalah ...",["digabung","diambil","hilang"],0,"Digabung artinya ditambah."]]},
+{t:"Misi Penjumlahan Bersusun",ic:"🧱",learn:[
+ "<h2>Bersusun tanpa menyimpan</h2><p>Contoh: <b>12 + 7</b></p><p>12 = 1 puluhan + 2 satuan. 7 = 7 satuan.</p><div class='center'><span class='tens'></span> <span class='ones'></span><span class='ones'></span> + <span class='ones'></span><span class='ones'></span><span class='ones'></span><span class='ones'></span><span class='ones'></span><span class='ones'></span><span class='ones'></span></div><p>Satuan + satuan: 2 + 7 = 9.<br>Puluhan + puluhan: 1 + 0 = 1.</p><div class='center'><pre class='col'>  12\n+  7\n----\n  19</pre></div><p>Satuan dijumlah dengan satuan. Puluhan dengan puluhan!</p>",
+ "<h2>Penjumlahan puluhan</h2><p><b>30 + 10</b>. Angka 30 = 3 puluhan, 10 = 1 puluhan.</p><div class='center'><span class='tens'></span><span class='tens'></span><span class='tens'></span> + <span class='tens'></span></div><p>3 puluhan + 1 puluhan = 4 puluhan.</p><div class='big'>30 + 10 = 40</div><p>Cerita: Nabi Musa bermunajat 30 malam, lalu ditambah 10 malam. Jadi 40 malam.</p>","<h2>Mengapa puluhan dan satuan tidak boleh tertukar?</h2><p>Angka 12: angka <b>1</b> bernilai 10 (puluhan) dan angka <b>2</b> bernilai 2 (satuan).</p><p>Kalau 1 dijumlah dengan 7, hasilnya salah, karena 1 itu sebenarnya 10! Jadi tulis angka <b>rata kanan</b>: satuan di bawah satuan.</p><div class='center'><pre class='col'>  12\n+  7\n----\n  19</pre></div>","<h2>Contoh lain: 23 + 4</h2><p>Satuan: 3 + 4 = 7.<br>Puluhan: 2 + 0 = 2.<br>Gabung: <b>27</b>.</p><p>Contoh puluhan lain: 20 + 50. 2 puluhan + 5 puluhan = 7 puluhan = <b>70</b>.</p>"],
+ q:[["12 + 7 = ...",["19","18","20"],0,"Satuan 2 + 7 = 9, puluhan 1. Hasilnya 19."],
+    ["Satuan dijumlah dengan ...",["puluhan","satuan"],1,"Satuan dengan satuan, puluhan dengan puluhan."],
+    ["30 + 10 = ...",["31","40","4"],1,"3 puluhan + 1 puluhan = 4 puluhan = 40."],["23 + 4 = ...",["27","63","26"],0,"3 + 4 = 7, puluhan 2. Hasil 27."],["20 + 50 = ...",["70","25","7"],0,"2 puluhan + 5 puluhan = 7 puluhan = 70."]]},
+{t:"Tantangan Teknik Menyimpan",ic:"🎒",learn:[
+ "<h2>Menyimpan puluhan</h2><p>Contoh: <b>16 + 5</b></p><p>16 = 1 puluhan dan 6 satuan. 5 = 5 satuan.</p><p>1. Satuan: 6 + 5 = 11.<br>2. 11 = 1 puluhan dan 1 satuan.<br>3. Tulis <b>1</b> di satuan, <b>simpan 1 puluhan</b>.<br>4. Puluhan: 1 + 1 = 2 puluhan.</p><div class='center'><pre class='col'>   1\n  16\n+  5\n----\n  21</pre></div><p>10 satuan dikelompokkan jadi 1 puluhan, makanya angka 1 disimpan. Jadi <b>16 + 5 = 21</b>.</p>","<h2>Kapan harus menyimpan?</h2><p>Jumlahkan satuan dulu. Kalau hasilnya <b>10 atau lebih</b>, kita <b>menyimpan</b> 1 puluhan.</p><p>Kalau hasil satuan kurang dari 10, tidak perlu menyimpan (seperti 12 + 7 = 9 satuan).</p><div class='center'><span class='ones'></span><span class='ones'></span><span class='ones'></span><span class='ones'></span><span class='ones'></span><span class='ones'></span> + <span class='ones'></span><span class='ones'></span><span class='ones'></span><span class='ones'></span><span class='ones'></span> → 11 satuan = <span class='tens'></span> + <span class='ones'></span></div><p>10 satuan diikat jadi 1 puluhan (1 ikat).</p>","<h2>Contoh lain: 27 + 6</h2><p>Satuan: 7 + 6 = 13. Tulis <b>3</b>, simpan <b>1</b>.<br>Puluhan: 2 + 1 = 3.</p><div class='center'><pre class='col'>   1\n  27\n+  6\n----\n  33</pre></div><p>Jadi <b>27 + 6 = 33</b>.</p>"],
+ q:[["6 + 5 = 11. Angka yang ditulis di satuan adalah ...",["1","11","5"],0,"11 = 1 puluhan dan 1 satuan. Tulis 1 satuan."],
+    ["16 + 5 = ...",["21","11","22"],0,"6 + 5 = 11, simpan 1. Puluhan 1 + 1 = 2. Hasil 21."],
+    ["Mengapa kita menyimpan 1?",["Karena 10 satuan jadi 1 puluhan","Karena suka"],0,"10 satuan sama dengan 1 puluhan."],["27 + 6 = ...",["33","23","32"],0,"7 + 6 = 13, tulis 3 simpan 1. Puluhan 2 + 1 = 3."],["Kita menyimpan puluhan jika hasil satuan ...",["10 atau lebih","kurang dari 10"],0,"Kalau 10 atau lebih, 10 satuan jadi 1 puluhan."]]},
+{t:"Dunia Pengurangan",ic:"🥀",learn:[
+ "<h2>Apa itu pengurangan?</h2><p>Pengurangan dipakai saat sebagian benda <b>diambil, hilang, atau berkurang</b>.</p><p>Ada <b>12 bunga</b>. Sebanyak <b>3 bunga layu</b>.</p>"+flowers(12,3)+"<p>Sisa yang tidak layu: <b>9 bunga</b>.</p><div class='big'>12 − 3 = 9</div><p>Tanda <b>+</b> untuk menambah. Tanda <b>−</b> untuk mengurangi.</p>",
+ "<h2>Menghitung mundur</h2><p><b>11 − 5 = ...</b> Mulai dari 11, lompat mundur 5 langkah.</p><div data-nl='11,5,-1'></div><p>Jadi <b>11 − 5 = 6</b>. Pengurangan berarti bergerak <b>mundur</b>.</p>",
+ "<h2>Bersusun tanpa meminjam</h2><p><b>16 − 4</b>. Satuan: 6 − 4 = 2. Puluhan: 1 − 0 = 1.</p><div class='center'><pre class='col'>  16\n−  4\n----\n  12</pre></div>","<h2>Kata kunci pengurangan</h2><p>Biasanya kita memakai <b>−</b> jika ada kata:</p><p>• dikurangi<br>• diambil<br>• hilang / layu<br>• dipinjam / dimakan<br>• tersisa</p><p>Contoh: 9 apel, dimakan 4. Sisa <b>9 − 4 = 5</b> apel.</p>","<h2>Contoh lain: 25 − 3</h2><p>Satuan: 5 − 3 = 2.<br>Puluhan: 2 − 0 = 2.<br>Hasil: <b>22</b>.</p><p>Ingat: kurangi satuan dengan satuan, puluhan dengan puluhan, sama seperti penjumlahan.</p>"],
+ q:[["12 bunga, 3 bunga layu. Sisa bunga ...",["9","15","8"],0,"12 − 3 = 9."],
+    ["11 − 5 = ...",["6","7","16"],0,"Mundur 5 langkah dari 11 sampai 6."],
+    ["16 − 4 = ...",["12","20","10"],0,"6 − 4 = 2, puluhan 1. Hasil 12."],["9 apel, dimakan 4. Sisa apel ...",["5","13","4"],0,"9 − 4 = 5."],["25 − 3 = ...",["22","28","23"],0,"5 − 3 = 2, puluhan 2. Hasil 22."]]},
+{t:"Tantangan Teknik Meminjam",ic:"🤝",learn:[
+ "<h2>Meminjam puluhan</h2><p><b>22 − 6</b>. Satuan 2 lebih kecil dari 6 (2 &lt; 6), jadi <b>pinjam 1 puluhan</b>.</p><p>Satuan: 12 − 6 = 6. Puluhan: (2 − 1) − 0 = 1.</p><div class='center'><pre class='col'>  22\n−  6\n----\n  16</pre></div><p>Jadi <b>22 − 6 = 16</b>.</p>",
+ "<h2>Contoh lain</h2><p><b>12 − 4</b>. Karena 2 &lt; 4, pinjam 1 puluhan. Satuan: 12 − 4 = 8. Puluhan: (1 − 1) − 0 = 0.</p><div class='big'>12 − 4 = 8</div><p>Cerita: 1 tahun ada 12 bulan. 4 bulan istimewa. Sisanya 8 bulan.</p>","<h2>Mengapa harus meminjam?</h2><p>Pada 22 − 6, satuannya hanya 2. Kita tidak bisa mengambil 6 dari 2.</p><p>Jadi kita <b>pinjam 1 puluhan</b> dari angka 2 di puluhan. 1 puluhan = 10 satuan.</p><p>Satuan jadi 2 + 10 = <b>12</b>. Puluhan tinggal 2 − 1 = <b>1</b>.</p>","<h2>Contoh lain: 31 − 8</h2><p>Satuan 1 &lt; 8, pinjam 1 puluhan. 11 − 8 = <b>3</b>.<br>Puluhan: 3 − 1 = <b>2</b>.</p><div class='center'><pre class='col'>  31\n−  8\n----\n  23</pre></div><p>Cek hasilnya dengan penjumlahan: 23 + 8 = 31. Benar!</p>"],
+ q:[["22 − 6: satuan 2 lebih kecil dari 6. Kita harus ...",["meminjam puluhan","menyimpan puluhan"],0,"Kalau satuan tidak cukup, pinjam 1 puluhan."],
+    ["22 − 6 = ...",["16","14","28"],0,"12 − 6 = 6 satuan, puluhan 1. Hasil 16."],
+    ["12 − 4 = ...",["8","16","18"],0,"Pinjam 1 puluhan: 12 − 4 = 8."],["31 − 8 = ...",["23","33","27"],0,"11 − 8 = 3, puluhan 3 − 1 = 2. Hasil 23."],["Pada 22 − 6, setelah pinjam, satuan menjadi ...",["12","2","6"],0,"2 satuan + 10 satuan = 12 satuan."]]},
+{t:"Rahasia Hubungan + dan −",ic:"🔁",learn:[
+ "<h2>Kebalikan</h2><p>Pengurangan adalah <b>kebalikan</b> dari penjumlahan. Begitu juga sebaliknya.</p><div class='big'>12 + 4 = 16<br>16 − 4 = 12<br>16 − 12 = 4</div><p>Tiga bilangan yang sama: 12, 4, dan 16. Kalau tahu satu rahasia, kita tahu semuanya!</p>","<h2>Keluarga bilangan</h2><p>Tiga bilangan 5, 3, dan 8 adalah satu keluarga.</p><div class='big'>5 + 3 = 8<br>3 + 5 = 8<br>8 − 3 = 5<br>8 − 5 = 3</div><p>Kita bisa memakai ini untuk <b>mengecek jawaban</b>. Jika 8 − 3 = 5, maka 5 + 3 harus 8.</p>"],
+ q:[["12 + 4 = 16, maka 16 − 4 = ...",["12","20","4"],0,"Kebalikan dari tambah 4 adalah kurang 4."],
+    ["12 + 4 = 16, maka 16 − 12 = ...",["4","28","16"],0,"16 − 12 = 4."],
+    ["Kebalikan penjumlahan adalah ...",["pengurangan","perkalian"],0,"Penjumlahan dan pengurangan saling berkebalikan."],["5 + 3 = 8, maka 8 − 3 = ...",["5","11","3"],0,"8 − 3 = 5."],["Jika 9 − 4 = 5, maka 5 + 4 = ...",["9","1","14"],0,"Kebalikan dari 9 − 4 = 5 adalah 5 + 4 = 9."]]},
+{t:"Misi Operasi Hitung Campuran",ic:"🧩",learn:[
+ "<h2>Urut dari depan</h2><p>Operasi campuran + dan − dikerjakan <b>urut dari depan</b>.</p><p><b>15 − 2 + 6</b></p><p>1. Kerjakan depan dulu: 15 − 2 = 13.<br>2. Lanjut: 13 + 6 = 19.</p><div class='big'>15 − 2 + 6 = 19</div>","<h2>Contoh lain: 9 + 5 − 4</h2><p>Kerjakan dari depan.<br>1. 9 + 5 = 14.<br>2. 14 − 4 = 10.</p><div class='big'>9 + 5 − 4 = 10</div><p>Jangan loncat! Kalau dikerjakan dari belakang (5 − 4 dulu), hasilnya bisa salah. Selalu urut dari kiri ke kanan.</p>"],
+ q:[["Operasi campuran dikerjakan dari ...",["depan","belakang"],0,"Urut dari depan."],
+    ["15 − 2 = ... (langkah pertama 15 − 2 + 6)",["13","17","9"],0,"15 − 2 = 13."],
+    ["15 − 2 + 6 = ...",["19","7","11"],0,"13 + 6 = 19."],["9 + 5 − 4 = ...",["10","8","0"],0,"9 + 5 = 14, lalu 14 − 4 = 10."],["20 − 5 + 3 = ...",["18","12","28"],0,"20 − 5 = 15, lalu 15 + 3 = 18."]]},
+{t:"Petualangan Soal Cerita",ic:"📖",learn:[
+ "<h2>Cerita penjumlahan</h2><p>Pedagang punya <b>5 kg duku</b>, lalu membeli lagi <b>14 kg</b>. Berapa sekarang?</p><p>Kata “membeli lagi” artinya <b>tambah</b>. 5 + 14 = 19.</p><p>Jadi duku pedagang sekarang <b>19 kilogram</b>.</p>",
+ "<h2>Cerita pengurangan</h2><p>Adit punya <b>15 buku</b>. <b>3 buku</b> dipinjam Hendra. Berapa sisanya?</p><p>Kata “dipinjam” artinya <b>berkurang</b>. 15 − 3 = 12.</p><p>Jadi sisa buku Adit <b>12 buku</b>.</p>","<h2>Langkah menyelesaikan soal cerita</h2><p>1. <b>Baca</b> ceritanya pelan-pelan.<br>2. <b>Cari</b> bilangan yang diketahui.<br>3. <b>Pilih</b> tambah atau kurang dari kata kuncinya.<br>4. <b>Hitung</b> hasilnya.<br>5. <b>Tulis</b> jawabannya lengkap dengan satuannya.</p><p>Contoh: Ibu punya 20 telur, 6 telur pecah. Sisa <b>20 − 6 = 14</b> telur.</p>"],
+ q:[["Pedagang punya 5 kg duku, beli lagi 14 kg. Sekarang ada ...",["19 kg","9 kg","20 kg"],0,"5 + 14 = 19."],
+    ["Adit punya 15 buku, 3 dipinjam. Sisa ...",["12 buku","18 buku","13 buku"],0,"15 − 3 = 12."],
+    ["Kata “dibeli lagi” biasanya berarti ...",["tambah","kurang"],0,"Bertambah, jadi pakai penjumlahan."],["Ibu punya 20 telur, 6 telur pecah. Sisa telur ...",["14","26","15"],0,"Pecah berarti berkurang. 20 − 6 = 14."],["Dina punya 13 kelereng, diberi teman 5 kelereng. Sekarang ada ...",["18","8","17"],0,"Diberi berarti bertambah. 13 + 5 = 18."]]}
+];
+var FINAL=[
+ ["10 + 3 = ...",["13","12","7"],0,"10 + 3 = 13."],
+ ["8 + 5 = ...",["13","12","14"],0,"Maju 5 dari 8 sampai 13."],
+ ["12 + 7 = ...",["19","20","18"],0,"2 + 7 = 9, puluhan 1, hasil 19."],
+ ["16 + 5 = ...",["21","11","22"],0,"6 + 5 = 11, simpan 1. Hasil 21."],
+ ["12 − 3 = ...",["9","15","8"],0,"12 − 3 = 9."],
+ ["22 − 6 = ...",["16","15","28"],0,"Pinjam 1 puluhan: 12 − 6 = 6, puluhan 1."],
+ ["15 − 2 + 6 = ...",["19","7","11"],0,"15 − 2 = 13, lalu 13 + 6 = 19."],
+ ["Adit punya 15 buku, 3 dipinjam. Sisa buku ...",["12","18","13"],0,"15 − 3 = 12."]
+];
+
+// ====== STATE ======
+var S={name:"",cls:"",start:null,open:0,done:[]};
+try{var sv=sessionStorage.getItem("bab2");if(sv)S=JSON.parse(sv)}catch(e){}
+function save(){try{sessionStorage.setItem("bab2",JSON.stringify(S))}catch(e){}}
+var app=document.getElementById("app");
+var mute=false,AC=null;
+document.getElementById("snd").onclick=function(){mute=!mute;this.textContent=mute?"🔇 Hening":"🔊 Suara"};
+function beep(ok){if(mute)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();var o=AC.createOscillator(),g=AC.createGain();o.connect(g);g.connect(AC.destination);o.type="triangle";var t=AC.currentTime;o.frequency.setValueAtTime(ok?523:200,t);if(ok)o.frequency.setValueAtTime(784,t+.12);g.gain.setValueAtTime(.15,t);g.gain.exponentialRampToValueAtTime(.001,t+.35);o.start(t);o.stop(t+.35)}catch(e){}}
+function wita(d){try{return new Intl.DateTimeFormat("id-ID",{timeZone:"Asia/Makassar",dateStyle:"medium",timeStyle:"medium"}).format(d)+" WITA"}catch(e){return d.toISOString()}}
+
+// ====== TAMPILAN ======
+function home(){
+ document.getElementById("who").textContent="Petualangan Matematika";
+ app.innerHTML='<div class="card hero pop"><svg viewBox="0 0 400 190" role="img" aria-label="Pulau angka"><rect width="400" height="190" rx="24" fill="#bfe6ff"/><circle cx="330" cy="40" r="26" fill="#ffc93c"/><ellipse cx="200" cy="170" rx="190" ry="40" fill="#5ed6a8"/><g font-family="Fredoka,Arial" font-weight="700" font-size="46"><text x="50" y="125" fill="#ff8a3d">7</text><text x="105" y="95" fill="#8b6cf0">+</text><text x="150" y="125" fill="#3aa7ff">5</text><text x="205" y="95" fill="#8b6cf0">=</text><text x="255" y="125" fill="#e5484d">12</text></g><text x="20" y="40" font-size="30">☁️</text><text x="120" y="55" font-size="24">🐦</text></svg><h1>PETUALANGAN MATEMATIKA</h1><p><b>Bab 2: Penjumlahan dan Pengurangan</b></p><p>Ayo, taklukkan dunia angka! Belajar sedikit demi sedikit, pahami caranya, lalu selesaikan tantangannya!</p></div>'+
+ '<div class="card"><label for="nm">Nama kamu</label><input id="nm" placeholder="Tulis namamu" autocomplete="off"><label for="kl">Kelas</label><select id="kl"><option value="">Pilih kelas</option>'+KELAS.map(function(k){return"<option>"+k+"</option>"}).join("")+'</select><p id="er" style="color:var(--bad);margin:0"></p><button class="go" id="mulai" style="width:100%">MULAI PETUALANGAN</button><p>Cara belajar: baca penjelasan, coba kuis, lalu buka tahap berikutnya. Kamu harus menjawab benar untuk lanjut.</p></div>';
+ document.getElementById("mulai").onclick=function(){var n=document.getElementById("nm").value.trim(),k=document.getElementById("kl").value;if(!n||!k){document.getElementById("er").textContent="Isi nama dan pilih kelas dulu, ya.";return}S.name=n;S.cls=k;S.start=Date.now();S.open=0;S.done=[];S.final=null;save();map()}}
+function map(){
+ document.getElementById("who").textContent="Hai, "+S.name+" ("+S.cls+")";
+ var pct=Math.round(S.done.length/9*100);
+ app.innerHTML='<div class="card"><b>Peta Petualangan</b> – '+S.done.length+' dari 9 tahap selesai<div class="bar"><i style="width:'+pct+'%"></i></div></div><div class="map">'+
+ STAGES.concat([{t:"Tantangan Akhir Bab 2",ic:"🏆"}]).map(function(s,i){var d=S.done.indexOf(i)>-1,l=i>S.open&&!d;
+ return '<div class="node '+(d?'done':l?'lock':'')+'"><b>'+(d?"⭐":l?"🔒":s.ic)+'</b><span>Tahap '+(i+1)+'<br>'+s.t+'</span>'+(l?'<small>Terkunci</small>':'<button class="'+(d?'alt':'go')+'" data-i="'+i+'">'+(d?"Ulangi":"Main")+'</button>')+'</div>'}).join("")+'</div>';
+ app.querySelectorAll("button[data-i]").forEach(function(b){b.onclick=function(){var i=+b.dataset.i;i===8?final():stage(i)}})}
+function stage(i){var st=STAGES[i],p=0;
+ function page(){
+  if(p<st.learn.length){
+   app.innerHTML='<div class="card pop"><small>Tahap '+(i+1)+': '+st.t+' – Materi '+(p+1)+'/'+st.learn.length+'</small>'+st.learn[p]+'<button class="go" id="nx">'+(p<st.learn.length-1?"Lanjut":"Mulai Kuis")+'</button></div>';
+   initNL();document.getElementById("nx").onclick=function(){p++;page()}
+  }else quiz(st.q,i,false)}
+ page()}
+function initNL(){document.querySelectorAll("[data-nl]").forEach(function(el){var a=el.dataset.nl.split(",").map(Number),s=a[0],n=a[1],d=a[2],lo=Math.min(s,s+d*n)-1,hi=Math.max(s,s+d*n)+1,k=0;
+ var cells="";for(var v=lo;v<=hi;v++)cells+='<span data-v="'+v+'">'+v+'</span>';
+ el.innerHTML='<div class="nl">'+cells+'</div><p class="center" id="nt"></p><div class="center"><button class="alt">Lihat Langkah Berikutnya</button></div>';
+ function mark(){el.querySelectorAll("span").forEach(function(c){var v=+c.dataset.v;c.className=v===s+d*k?(k===n?"end":"on"):""})}
+ var msg=el.querySelector("p");msg.textContent="Mulai dari "+s;mark();
+ el.querySelector("button").onclick=function(){if(k<n){k++;beep(true);msg.textContent="Langkah "+k+": "+(s+d*k);mark();if(k===n){this.disabled=true;msg.textContent+=" – sampai!"}}}})}
+function quiz(Q,si,isFinal){var j=0,ben=0;S.final=S.final||{};
+ function show(){var q=Q[j],tried=false;
+  app.innerHTML='<div class="card pop"><small>'+(isFinal?"Tantangan Akhir":"Kuis Tahap "+(si+1))+' – soal '+(j+1)+'/'+Q.length+'</small><div class="bar"><i style="width:'+(j/Q.length*100)+'%"></i></div><h2>'+q[0]+'</h2><div class="opts">'+q[1].map(function(o,x){return'<button data-x="'+x+'">'+o+'</button>'}).join("")+'</div><div id="fb"></div></div>';
+  app.querySelectorAll(".opts button").forEach(function(b){b.onclick=function(){var x=+b.dataset.x,fb=document.getElementById("fb"),ok=x===q[2];
+   if(ok){beep(true);b.className="ok";if(!tried)ben++;app.querySelectorAll(".opts button").forEach(function(c){c.disabled=true});fb.innerHTML='<div class="fb ok">⭐ Hebat! '+q[3]+'</div><button class="go" id="n2" style="margin-top:10px">'+(j<Q.length-1?"Soal berikutnya":"Selesai")+'</button>';document.getElementById("n2").onclick=next}
+   else{beep(false);b.className="no";b.disabled=true;
+    if(isFinal){tried=true;app.querySelectorAll(".opts button").forEach(function(c){c.disabled=true});fb.innerHTML='<div class="fb no">Belum tepat. '+q[3]+'</div><button class="go" id="n2" style="margin-top:10px">'+(j<Q.length-1?"Soal berikutnya":"Selesai")+'</button>';document.getElementById("n2").onclick=next}
+    else{tried=true;fb.innerHTML='<div class="fb no">Belum tepat. Coba lagi, ya! Petunjuk: '+q[3]+'</div>'}}}})}
+ function next(){j++;if(j<Q.length)show();else if(isFinal)finish(ben,Q.length);else{if(S.done.indexOf(si)<0)S.done.push(si);S.open=Math.max(S.open,si+1);save();beep(true);app.innerHTML='<div class="card center pop"><div class="stars">⭐⭐⭐</div><h2>Tahap '+(si+1)+' selesai!</h2><p>'+STAGES[si].t+' sudah kamu taklukkan.</p><button class="go" id="bk">Kembali ke Peta</button></div>';document.getElementById("bk").onclick=map}}
+ show()}
+function final(){var Q=FINAL.map(function(q){var o=q[1].map(function(t,i){return[t,i===q[2]]}).sort(function(){return Math.random()-.5});return[q[0],o.map(function(z){return z[0]}),o.findIndex(function(z){return z[1]}),q[3]]});quiz(Q,8,true)}
+function finish(b,t){var end=Date.now(),sec=Math.round((end-S.start)/1000),nilai=Math.round(b/t*100);
+ var data={nama:S.name,kelas:S.cls,materi:"Matematika Bab 2: Penjumlahan dan Pengurangan",mulai:wita(new Date(S.start)),selesai:wita(new Date(end)),durasi:Math.floor(sec/60)+" menit "+sec%60+" detik",benar:b,salah:t-b,nilai:nilai};
+ if(S.done.indexOf(8)<0)S.done.push(8);save();var sent="";
+ if(SCRIPT_URL){try{fetch(SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(data)});sent="Hasilmu sudah dikirim ke gurumu."}catch(e){sent="Hasil belum terkirim. Beri tahu gurumu."}}else sent="(Pengiriman rekap belum diaktifkan.)";
+ beep(true);
+ app.innerHTML='<div class="card center pop"><div class="stars">🏆</div><h1>Selamat, '+S.name+'!</h1><div class="big">Nilai: '+nilai+'</div><p>Benar: <b>'+b+'</b> – Salah: <b>'+(t-b)+'</b><br>Durasi: <b>'+data.durasi+'</b><br>Selesai: '+data.selesai+'</p><p>'+sent+'</p><button class="alt" id="bk">Kembali ke Peta</button></div>';
+ document.getElementById("bk").onclick=map}
+
+if(S.start&&S.name)map();else home();
+</script>
+</body>
+</html>
